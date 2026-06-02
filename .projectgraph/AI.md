@@ -1,18 +1,27 @@
 # AI Tool Integration
 
-<!-- Copy the block for your tool into its native config. -->
 <!-- CONVENTIONS.md is the rule source of truth — do not duplicate rules here. -->
 
-## Reading order
+## Token loading tiers
 
-| When | Files to load |
-|---|---|
-| Every session | `CONTEXT.md` + `CONVENTIONS.md` |
-| Complex tasks | + `STATE.md` + `RESEARCH.md` (Active section only) |
-| Arch / tech decisions | + `ARCHITECTURE.md` + last 3–5 files in `log/` |
-| Sequencing / phase work | + `IMPLEMENTATION.md` |
-| Quality / correctness checks | + `EVAL.md` |
-| Never auto-load | `CAPTURE.md` — unprocessed inbox |
+| Tier | Files | When |
+|---|---|---|
+| Tier 1 (always) | `CONTEXT.md`, `NEXT.md`, `STATE.md` | Every session start |
+| Tier 2 (relevant) | `CONVENTIONS.md`, `RESEARCH.md`, `MODES.md` | Based on task |
+| Tier 3 (on demand) | `log/`, `CAPTURE.md` | Investigating history only |
+
+## Maya — entry point
+
+Maya is the orchestrator. Activate her at the start of every project session.
+
+```
+Act as Maya for this project.
+Read .projectgraph/agents/MAYA.md for your role definition.
+Read .projectgraph/CONTEXT.md and .projectgraph/NEXT.md.
+```
+
+Maya infers context, selects the mode, and activates downstream agents on demand.
+See `.projectgraph/agents/MAYA.md` for her full protocol.
 
 ---
 
@@ -21,10 +30,12 @@
 Paste into **Project Instructions**:
 
 ```
-Before every response, read .projectgraph/CONTEXT.md and .projectgraph/CONVENTIONS.md.
-For architecture or tech decisions, also read the 3 most recent files in .projectgraph/log/.
+Before every response, read .projectgraph/CONTEXT.md and .projectgraph/NEXT.md.
+For conventions, also read .projectgraph/CONVENTIONS.md.
+For architecture or tech decisions, read the 3 most recent files in .projectgraph/log/.
 Treat anything under CONTEXT.md "Assumptions" as unvalidated — say so when relevant.
-If STATE.md shows any file unreviewed >30 days, flag it.
+If STATE.md Health check shows any file unreviewed >30 days, flag it.
+Check CONTEXT.md Mode field → see MODES.md for which agents and files are active.
 Never use .projectgraph/CAPTURE.md as context.
 ```
 
@@ -36,9 +47,11 @@ Add to `CLAUDE.md` at the project root:
 
 ```
 @file .projectgraph/CONTEXT.md
+@file .projectgraph/NEXT.md
 @file .projectgraph/CONVENTIONS.md
 
 Follow all conventions in CONVENTIONS.md exactly.
+Check MODES.md for the active mode and which agents apply.
 For architecture decisions, check .projectgraph/log/ before proposing changes.
 Treat CONTEXT.md "Assumptions" as unvalidated.
 ```
@@ -59,30 +72,19 @@ Treat CONTEXT.md "Assumptions" as unvalidated.
 
 ## ChatGPT
 
-**Option A — Custom Instructions (persistent across sessions):**
-```
-I maintain a .projectgraph/ folder for my projects.
-When I share CONTEXT.md, treat it as authoritative project context.
-Treat any "Assumptions" section as unvalidated beliefs, not confirmed facts.
-```
-
-**Option B — Per session:** Upload `CONTEXT.md` and `CONVENTIONS.md` at session start.
+Upload `CONTEXT.md` + `NEXT.md` + `CONVENTIONS.md` at session start. Then activate Maya.
 
 ---
 
 ## Gemini
 
-Load the 5 core files at session start, then open with:
-```
-I've attached my project context files. Read them before responding.
-Treat "Assumptions" sections as unvalidated.
-```
+Load Tier 1 + Tier 2 files at session start (context window is generous). Then activate Maya.
 
 ---
 
-## Global defaults (optional)
+## Cross-project (optional)
 
-Create `~/.projectgraph/GLOBAL.md` for personal conventions that apply across all your projects:
+Create `~/.projectgraph/GLOBAL.md` for personal defaults that apply across all your projects:
 
 ```markdown
 # Global Conventions
@@ -97,7 +99,7 @@ Create `~/.projectgraph/GLOBAL.md` for personal conventions that apply across al
 -
 ```
 
-Then add this to any AI tool config:
+Then add to any AI tool config:
 ```
 Also read ~/.projectgraph/GLOBAL.md for personal defaults before making recommendations.
 ```

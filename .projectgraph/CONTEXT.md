@@ -7,9 +7,10 @@
 ## Identity <!-- REQUIRED -->
 - **Name:** [Project name]
 - **Slug:** [short-id — e.g. acme-crm]
-- **One-liner:** [What this does in 15 words or fewer]
+- **One-liner:** [What this does — max 15 words]
 - **Type:** [product | research | experiment | internal-tool]
 - **Stage:** [idea | prototype | mvp | growth | mature]
+- **Mode:** mvp <!-- mvp | research | ai-rag | saas | repo-rescue → see MODES.md. Maya sets this. -->
 
 ## Problem <!-- REQUIRED — max 40 words -->
 [Who has what pain? Why does it matter now?]
@@ -29,3 +30,9 @@
 ## Assumptions (unvalidated) <!-- OPTIONAL -->
 <!-- AI: treat everything in this section as uncertain, not confirmed fact. -->
 - [Belief not yet validated by evidence]
+
+<!-- TOKEN LOADING TIERS — AI: use this to decide what to read.
+  Tier 1 (always):    CONTEXT.md, NEXT.md, STATE.md
+  Tier 2 (relevant):  CONVENTIONS.md, RESEARCH.md, MODES.md
+  Tier 3 (on demand): log/ entries, CAPTURE.md
+-->
