@@ -23,6 +23,9 @@ your-project/
 │   ├── CONVENTIONS.md    # Rules for AI and humans
 │   ├── CAPTURE.md        # Raw inbox — normalize weekly
 │   ├── AI.md             # Per-tool setup instructions
+│   ├── ARCHITECTURE.md   # System layers, contracts, tech choices (optional)
+│   ├── IMPLEMENTATION.md # Phase plan with exit criteria (optional)
+│   ├── EVAL.md           # Success criteria, smoke tests, known limits (optional)
 │   └── log/
 │       └── YYYY-MM-DD-decision-title.md
 ├── .cursor/
@@ -56,6 +59,19 @@ your-project/
 | CAPTURE.md | Continuously | No (gitignored) |
 | AI.md | Per tool change | Yes |
 | log/*.md | Per decision | Yes |
+| ARCHITECTURE.md | When layers or contracts change | Yes |
+| IMPLEMENTATION.md | When phases or exit criteria change | Yes |
+| EVAL.md | When success criteria or limitations change | Yes |
+
+---
+
+## Optional files: when to use them
+
+**ARCHITECTURE.md** — Add this when your project has more than one moving part (e.g. a backend + LLM + frontend). It gives AI a map of layers, data contracts, and tech choices so it stops guessing at structure. Skip it for single-file scripts or pure research projects.
+
+**IMPLEMENTATION.md** — Add this when you are building in phases and need AI to respect sequencing. Each phase has exit criteria — AI should not suggest Phase N work while Phase N-1 is incomplete. Skip it for exploratory or one-shot builds.
+
+**EVAL.md** — Add this whenever an LLM is involved, or when "does it work?" is non-trivial to answer. It records what good output looks like, a smoke test checklist, and known limitations AI should surface. It is the answer to "how do we know this is right?"
 
 ---
 

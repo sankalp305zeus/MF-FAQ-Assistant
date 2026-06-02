@@ -9,7 +9,9 @@
 |---|---|
 | Every session | `CONTEXT.md` + `CONVENTIONS.md` |
 | Complex tasks | + `STATE.md` + `RESEARCH.md` (Active section only) |
-| Arch / tech decisions | + last 3–5 files in `log/` |
+| Arch / tech decisions | + `ARCHITECTURE.md` + last 3–5 files in `log/` |
+| Sequencing / phase work | + `IMPLEMENTATION.md` |
+| Quality / correctness checks | + `EVAL.md` |
 | Never auto-load | `CAPTURE.md` — unprocessed inbox |
 
 ---
