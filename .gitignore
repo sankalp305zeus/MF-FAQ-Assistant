@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+
+# ProjectGraph OS
+# STATE.md changes every session — causes merge conflicts on teams.
+# Solo projects: comment this out if you want to commit it.
+.projectgraph/STATE.md
+
+# CAPTURE.md is a personal scratch file. Never share it.
+.projectgraph/CAPTURE.md
