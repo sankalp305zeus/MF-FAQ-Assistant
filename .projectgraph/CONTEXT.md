@@ -1,38 +1,32 @@
-# Project Context
+# Context
 
-<!-- AI: read this file first. It is the authoritative project identity. -->
-<!-- REQUIRED fields must be filled before using AI assistance. -->
-<!-- OPTIONAL fields improve AI output but are not blocking. -->
+## Identity
+- Name: ProjectGraph OS
+- Slug: projectgraph-os
+- One-liner: Local AI-operated project orchestration with structured handoffs
+- Type: product
+- Stage: prototype
+- Mode: mvp
 
-## Identity <!-- REQUIRED -->
-- **Name:** [Project name]
-- **Slug:** [short-id — e.g. acme-crm]
-- **One-liner:** [What this does — max 15 words]
-- **Type:** [product | research | experiment | internal-tool]
-- **Stage:** [idea | prototype | mvp | growth | mature]
-- **Mode:** mvp <!-- mvp | research | ai-rag | saas | repo-rescue → see MODES.md. Maya sets this. -->
+## Problem
+AI-driven project work lacks a consistent local memory format and clear handoff rules across sessions.
 
-## Problem <!-- REQUIRED — max 40 words -->
-[Who has what pain? Why does it matter now?]
+## Solution
+Provide a minimal `.projectgraph/` OS that standardizes handoffs, limits loaded context, and makes every phase executable by a single agent.
 
-## Solution <!-- REQUIRED — max 40 words -->
-[What does this do about it? What does it NOT do?]
+## Constraints
+- Zero runtime dependencies outside markdown files
+- Tool-agnostic: any IDE or LLM loads only authorized context files
+- No legacy v3 file patterns may be active during execution
+- Human approval is required at gates and mode changes
 
-## Users <!-- OPTIONAL — max 40 words -->
-[Primary persona only. What do they care about most?]
+## Rules
+- Always load `.projectgraph/CONTEXT.md` and `.projectgraph/ACTIVE.md` first
+- Every agent reads only files listed in its startup protocol
+- Handoffs are mandatory, append-only, and schema-complete
+- Change mode only by editing `Mode:` in `.projectgraph/CONTEXT.md`
 
-## Architecture <!-- OPTIONAL — bullets only, max 6 items -->
-- [Key technology or system boundary]
+## Assumptions (unvalidated)
+- This repo is a bootstrap for ProjectGraph OS v4-beta
+- The current state is a new setup, not a completed product
 
-## Constraints <!-- OPTIONAL — bullets only, max 4 items -->
-- [Hard limit: budget, timeline, regulatory, team size]
-
-## Assumptions (unvalidated) <!-- OPTIONAL -->
-<!-- AI: treat everything in this section as uncertain, not confirmed fact. -->
-- [Belief not yet validated by evidence]
-
-<!-- TOKEN LOADING TIERS — AI: use this to decide what to read.
-  Tier 1 (always):    CONTEXT.md, NEXT.md, STATE.md
-  Tier 2 (relevant):  CONVENTIONS.md, RESEARCH.md, MODES.md
-  Tier 3 (on demand): log/ entries, CAPTURE.md
--->

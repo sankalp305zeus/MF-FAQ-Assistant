@@ -1,13 +1,13 @@
 ---
-description: ProjectGraph OS — project context and conventions
+description: ProjectGraph OS v4-beta — minimal project context
 globs: ["**/*"]
 alwaysApply: true
 ---
 
 @file .projectgraph/CONTEXT.md
-@file .projectgraph/CONVENTIONS.md
+@file .projectgraph/ACTIVE.md
 
-Follow all conventions in CONVENTIONS.md exactly.
-For architecture or tech decisions, check .projectgraph/log/ before proposing changes.
-Treat anything under CONTEXT.md "Assumptions" as unvalidated — say so when relevant.
-Never load .projectgraph/CAPTURE.md — it is an unprocessed inbox, not reliable context.
+Follow all rules in .projectgraph/CONTEXT.md exactly.
+If ACTIVE.md references a journal file, load only that handoff and its listed artifacts.
+Treat anything in CONTEXT.md Assumptions as unvalidated.
+Do not load legacy v3 files such as .projectgraph/NEXT.md, .projectgraph/CONVENTIONS.md, or .projectgraph/log/.

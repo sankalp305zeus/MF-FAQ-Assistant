@@ -6,22 +6,28 @@
 
 **Every session:**
 - `.projectgraph/CONTEXT.md`
-- `.projectgraph/CONVENTIONS.md`
+- `.projectgraph/ACTIVE.md`
 
 **Complex tasks:**
-- `.projectgraph/STATE.md`
-- `.projectgraph/RESEARCH.md` (Active section only)
-
-**Architecture or tech decisions:**
-- `.projectgraph/log/` — 3 most recent files
+- latest journal handoff referenced by ACTIVE.md
+- artifacts listed in that handoff
+- `.projectgraph/SUMMARY.md` when it exists and is relevant
 
 **Never load:**
-- `.projectgraph/CAPTURE.md` — unprocessed inbox, not reliable context
+- `.projectgraph/NEXT.md`
+- `.projectgraph/STATE.md`
+- `.projectgraph/CONVENTIONS.md`
+- `.projectgraph/AI.md`
+- `.projectgraph/REPO-RESCUE.md`
+- `.projectgraph/RESEARCH.md`
+- `.projectgraph/IMPLEMENTATION.md`
+- `.projectgraph/EVAL.md`
+- `.projectgraph/log/`
+- `.projectgraph/CAPTURE.md`
 
 ## Behaviour rules
 
-- Follow all conventions in `CONVENTIONS.md` exactly.
-- Treat anything under `CONTEXT.md` "Assumptions" as unvalidated — say so when relevant.
-- Before proposing an architecture or technology change, check `log/` for prior decisions on that topic.
-- If `STATE.md` shows any file unreviewed >30 days, flag it.
-- When `RESEARCH.md` entries have `Status: stale`, treat them with skepticism and say so.
+- Follow rules in `.projectgraph/CONTEXT.md` exactly.
+- Treat anything under `CONTEXT.md` Assumptions as unvalidated.
+- If a file is not in the agent startup protocol, do not load it without explicit instruction.
+- When reviewing architecture or decisions, prefer the latest journal handoff and referenced artifacts.
