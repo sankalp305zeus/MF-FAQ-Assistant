@@ -1,7 +1,5 @@
 # ProjectGraph OS — Antigravity Rules
 
-<!-- Antigravity reads this file automatically from .antigravity/rules/ -->
-
 ## Files to load
 
 **Every session:**

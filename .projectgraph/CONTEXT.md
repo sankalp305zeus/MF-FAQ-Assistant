@@ -29,4 +29,3 @@ Provide a minimal `.projectgraph/` OS that standardizes handoffs, limits loaded 
 ## Assumptions (unvalidated)
 - This repo is a bootstrap for ProjectGraph OS v4-beta
 - The current state is a new setup, not a completed product
-

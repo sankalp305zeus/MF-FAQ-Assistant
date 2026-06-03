@@ -23,4 +23,3 @@ Decision rules
 Escalation rules
 - Set `Status: blocked` and `Escalate to: human` when key inputs are missing
 - Do not proceed until a human confirms mode or scope changes
-
