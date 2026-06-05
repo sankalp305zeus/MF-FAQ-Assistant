@@ -1,41 +1,49 @@
-# [Project Name]
+# RAG-MF-FAQ
 
 ## What
-[One sentence. What does this do?]
+Facts-only FAQ chatbot that answers mutual fund scheme questions with source citations from Groww.
 
 ## Why
-[One sentence. What problem does this solve? For whom?]
+Retail investors spend 3-5 minutes per lookup navigating dense AMC pages. A fast, cited, facts-only answer reduces friction and prevents reliance on unverified social media sources.
 
 ## Success looks like
-[2-3 measurable outcomes. Not vanity metrics.]
--
--
+- Answers 10 common MF scheme questions correctly with source citations
+- Advisory/comparison queries are refused by design
+- Live demo accessible via URL
+- Evaluation dataset of 24 questions scored for precision and groundedness
 
 ## Constraints
-[Hard limits: time, tech, budget, scope exclusions.]
--
+- Free tier only (Groq, Railway/Streamlit Cloud)
+- No investment advice — facts only
+- 5 HDFC schemes for v1 (narrow corpus = high retrieval precision)
+- Solo builder, ship in 1 week
 
 ## Rules
-[Max 4. Conventions any AI must follow on this project.]
--
+- Use existing libraries before writing custom code (LangChain splitter > custom chunking)
+- Every answer must carry a Groww source citation URL
+- Deploy as single service — split only when necessary
+- Build evaluation dataset BEFORE building pipeline
 
 ## Now
-[Current phase. What's happening. What's blocked.]
+Hardcoded prototype built (app.py). 5 schemes, 10 FAQ pairs, Groww citations, advisory guardrail.
+Syntax validated locally. Needs deploy to Streamlit Cloud.
 
 ## Next
-[The single next action. Specific enough to execute without questions.]
+Deploy to Streamlit Cloud → get live URL → verify one end-to-end query in browser.
 
 ## Decisions made
-[Key choices + why. Max 5 most recent. Older ones live in journal/.]
--
+- Groq (Llama-3.3-70b) for generation — fast, free tier, sufficient for factual extraction
+- BGE-small-en-v1.5 for embeddings — local inference, no API cost
+- Streamlit for UI — ships fastest
+- 5 HDFC schemes only — precision over breadth for v1
 
 ## Verified
-[Last verification: what was checked, when, and evidence. "None" if unverified.]
+None — project not yet started.
 
 ## Launch
-- Target: [Railway | Vercel | Streamlit Cloud | other | none]
-- URL: [deployed URL or "not deployed"]
-- Status: [not-deployed | deployed-unverified | deployed-and-verified]
+- Target: Streamlit Cloud
+- URL: not deployed
+- Status: not-deployed
 
 <!-- Launch checklist — complete before setting status to deployed-and-verified:
 □ Health check endpoint returns expected response
