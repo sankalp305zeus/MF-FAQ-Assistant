@@ -1,110 +1,145 @@
-# ProjectGraph OS
+# PMOS — PM Operating System v1.1
 
-Structured project context + Maya-led AI orchestration. Local markdown. Zero dependencies.
+The smallest system that repeatedly ships portfolio-worthy projects.
 
-Works with Claude, ChatGPT, Cursor, Antigravity, and Gemini.
+## What this is
 
----
+PMOS gives a solo PM a reusable project structure that:
+- Loads in ~150 tokens (one file: BRIEF.md)
+- Works across Claude, Claude Code, Cursor, ChatGPT, Gemini, Antigravity
+- Compounds learning across projects via PLAYBOOK.md and FAILURES.md
+- Prevents deployment failures via a built-in launch checklist
+- Prevents debugging loops via an investigation protocol
 
-## What it does
+## What this is NOT
 
-Gives AI tools a consistent, low-token project memory. Maya — the product lead agent — reads your problem statement, infers context, selects a mode, and activates specialist agents only when needed.
+- Not a framework
+- Not a multi-agent system
+- Not a project management tool
+- Not documentation for documentation's sake
 
----
+## Structure
+
+```
+your-project/
+└── .pmos/
+    ├── BRIEF.md             # The one file. Project identity + state + launch status.
+    ├── journal/             # Append-only. Everything that happened.
+    └── artifacts/           # Everything produced. Architecture, PRDs, eval results.
+
+~/.pmos/
+├── PLAYBOOK.md              # What worked. Cross-project. Includes investigation protocol.
+└── FAILURES.md              # What didn't. Auto-populated from failed journal entries.
+```
 
 ## Quick start
 
-1. Fill **Problem** and **Solution** in `CONTEXT.md` — takes 5 minutes
-2. Copy your tool's block from `AI.md` into its native config
-3. Activate Maya: `"Act as Maya. Read .projectgraph/agents/MAYA.md, CONTEXT.md, and NEXT.md."`
-4. Maya infers the rest, asks at most 3 questions, and sets up your project
+1. Clone this repo or copy `.pmos/` into your project
+2. Copy `global/PLAYBOOK.md` and `global/FAILURES.md` to `~/.pmos/`
+3. Fill in BRIEF.md — just the What, Why, and Success sections (2 minutes)
+4. Tell your AI: "Read .pmos/BRIEF.md before every response"
+5. Start working
 
----
+## How Maya works
 
-## Repo structure
+Maya is not a separate agent. Maya is how you talk to your AI tool.
 
+When you start a session:
 ```
-.projectgraph/
-├── CONTEXT.md          # Project identity + mode — AI reads first
-├── NEXT.md             # Current goal + next action — read on every resume
-├── STATE.md            # Current status
-├── CONVENTIONS.md      # Rules for AI and humans
-├── MODES.md            # Mode routing table — Maya uses this to select mode
-├── RESEARCH.md         # Findings with confidence + staleness
-├── CAPTURE.md          # Raw inbox — normalize weekly
-├── REPO-RESCUE.md      # Workflow for existing/abandoned repos
-├── AI.md               # Tool setup: Claude / Cursor / ChatGPT / Gemini / Antigravity
-├── agents/
-│   └── MAYA.md         # Product Lead & Orchestrator
-└── log/
-    └── YYYY-MM-DD-decision-title.md
-
-.cursor/rules/projectgraph.mdc    # Cursor auto-load
-.antigravity/rules/projectgraph.md
+Read .pmos/BRIEF.md. You are Maya — my PM partner.
+Check ~/.pmos/PLAYBOOK.md for patterns matching this project type.
+Check ~/.pmos/FAILURES.md for known pitfalls.
+Then help me with: [your task]
 ```
 
----
+Maya has four modes — not separate agents, just focus areas:
 
-## Maya — the orchestrator
-
-Maya is the entry point for every project. She:
-
-- Reads your Problem + Solution and infers Name, Type, Stage, Users, Constraints
-- Asks at most 3 high-value questions — only what she cannot infer
-- Selects the right mode from `MODES.md`
-- Presents a filled `CONTEXT.md` and `NEXT.md` for your approval
-- Activates specialist agents (Nova, Atlas, Forge, Sentinel) on demand as work progresses
-
-Human is always the final approver at each gate.
-
----
-
-## Modes
-
-| Mode | When | Required files |
+| Mode | When | What Maya does |
 |---|---|---|
-| **mvp** | Shipping fast, solo or small team | CONTEXT, NEXT, STATE, CONVENTIONS |
-| **research** | Market/user/tech validation, no code | CONTEXT, NEXT, STATE, RESEARCH |
-| **ai-rag** | AI product with retrieval or eval | CONTEXT, NEXT, STATE, CONVENTIONS, RESEARCH |
-| **saas** | Production SaaS — auth, billing, multi-tenancy | CONTEXT, NEXT, STATE, CONVENTIONS, RESEARCH |
-| **repo-rescue** | Existing or abandoned codebase | CONTEXT, NEXT, STATE, REPO-RESCUE |
+| **Normal** | Default | PM thinking, building, creating |
+| **Launch** | Deploying | Follows launch checklist in BRIEF.md. Verifies each step. |
+| **Investigate** | Something broke | Follows investigation protocol from PLAYBOOK.md. FACT/DISPROVEN/UNKNOWN. |
+| **Verify** | Ready to ship | Checks Success metrics. Verifies deployment. Confirms Verified field. |
 
-Maya selects the mode. You confirm or override.
+## Anti-waste rules
 
----
+Before any task, Maya evaluates:
 
-## Token tiers
+| Dimension | Score |
+|---|---|
+| Portfolio value | high / medium / low |
+| Learning value | high / medium / low |
+| User value | high / medium / low |
+| Effort | hours estimate |
 
-| Tier | Files | When |
-|---|---|---|
-| 1 — always | CONTEXT, NEXT, STATE | Every session start |
-| 2 — relevant | CONVENTIONS, RESEARCH, MODES | Based on task |
-| 3 — on demand | log/, CAPTURE | Investigating history |
+If a task scores LOW on all three value dimensions → challenge it.
+If a task is >50% engineering and <20% portfolio value → challenge it.
+Ship > optimize. Demo > perfection. Feedback > polish.
 
----
+## Anti-loop rules
 
-## File responsibilities
+If 2 consecutive attempts produce the same error class:
+→ STOP fixing. Switch to investigation mode.
+→ Follow the investigation protocol in PLAYBOOK.md.
+→ Diagnose first, then fix.
 
-| File | When to update | Committed |
-|---|---|---|
-| CONTEXT.md | Rarely — identity changes | Yes |
-| NEXT.md | Every session | Solo: optional. Team: gitignored |
-| STATE.md | Per status change | Solo: optional. Team: gitignored |
-| CONVENTIONS.md | Per new rule | Yes |
-| MODES.md | When mode structure changes | Yes |
-| RESEARCH.md | Per finding | Yes |
-| CAPTURE.md | Continuously | No (gitignored) |
-| AI.md | Per tool change | Yes |
-| agents/*.md | Per agent change | Yes |
-| log/*.md | Per decision | Yes |
+If 3 total attempts fail:
+→ Escalate to human with diagnosis and options.
 
----
+## Journal format
 
-## Design principles
+After every significant action, append to journal/:
 
-- **Maya-led** — one entry point, consistent orchestration
-- **Infer first, ask second** — Maya fills gaps before prompting the human
-- **Low token usage** — structured fields, no prose padding
-- **Max 5 required files per mode** — enforced in MODES.md
-- **Agents on demand** — no agent is pre-loaded; Maya activates them when needed
-- **Tool-agnostic** — same files, per-tool config blocks in `AI.md`
+```markdown
+# [Action title]
+
+Date: YYYY-MM-DD
+Type: [decision | build | research | fix | ship | learn | investigate]
+
+## What happened
+[2-5 sentences.]
+
+## Outcome
+[Worked | Failed | Partial]
+
+## Decisions
+[If any.]
+
+## Learning
+[What to remember for future projects.]
+```
+
+Journal entries with `Outcome: Failed` automatically become FAILURES.md candidates.
+
+## Definition of Done
+
+A project is done when:
+1. Working demo accessible via URL
+2. Success metrics from BRIEF.md are measured (not assumed)
+3. At least one evaluation run completed with documented results
+4. BRIEF.md Verified field has evidence, not just "done"
+5. BRIEF.md Launch status is "deployed-and-verified"
+6. PLAYBOOK.md updated with reusable patterns
+7. FAILURES.md updated with failure patterns
+
+## IDE auto-load config
+
+For Claude Code, Cursor, Antigravity, or any IDE:
+
+```
+Read .pmos/BRIEF.md before every response.
+```
+
+That's it. ~150 tokens of background context.
+
+## After 3 projects
+
+Perform a retrospective:
+- Which BRIEF.md fields were actually used?
+- Which journal entries provided value?
+- How many PLAYBOOK entries exist?
+- How many FAILURES entries exist?
+- Did the investigation protocol get used?
+- Did the launch checklist prevent any failures?
+
+Update PMOS based on evidence. Not before.
