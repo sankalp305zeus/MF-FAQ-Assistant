@@ -25,11 +25,14 @@ Retail investors spend 3-5 minutes per lookup navigating dense AMC pages. A fast
 - Build evaluation dataset BEFORE building pipeline
 
 ## Now
-Hardcoded prototype built (app.py). 5 schemes, 10 FAQ pairs, Groww citations, advisory guardrail.
-Syntax validated locally. Needs deploy to Streamlit Cloud.
+MVP shipped and production-verified. All 5 HDFC schemes live. Full RAG pipeline deployed.
+Two bugs fixed post-deploy (Bug-001: scheme_name dropped; Bug-002: AUM grounding failure).
+Project closed.
 
 ## Next
-Deploy to Streamlit Cloud → get live URL → verify one end-to-end query in browser.
+1. Confirm RAILWAY_DEPLOY_HOOK_URL in GitHub Secrets for automated daily refresh
+2. Build evaluation dataset — 24 questions scored for precision and groundedness
+3. Expand to 14 additional schemes across other AMCs
 
 ## Decisions made
 - Groq (Llama-3.3-70b) for generation — fast, free tier, sufficient for factual extraction
@@ -38,12 +41,26 @@ Deploy to Streamlit Cloud → get live URL → verify one end-to-end query in br
 - 5 HDFC schemes only — precision over breadth for v1
 
 ## Verified
-None — project not yet started.
+2026-06-07 — MVP production verified.
+All 5 tabs tested: HDFC Mid-Cap, Large Cap, Small Cap, Gold ETF FoF, Defence.
+AUM, expense ratio, exit load, fund manager, minimum SIP — all returning answers with Groww citations.
+Refusal behaviour confirmed on advisory queries.
+Grounding validator confirmed catching hallucinated numbers.
+
+## Current Architecture
+- Backend: FastAPI + BGE-small-en-v1.5 + ChromaDB + Groq (llama-3.3-70b-versatile)
+- Frontend: Lovable (React/TypeScript)
+- Deploy: Railway (backend) + Lovable Cloud (frontend)
+- Ingestion: GitHub Actions — daily 10:00 AM IST
+
+## Evaluation Outcome
+Functional verification passed. Formal eval dataset (24 questions, precision + groundedness scoring) not yet built — next milestone.
 
 ## Launch
-- Target: Streamlit Cloud
-- URL: not deployed
-- Status: not-deployed
+- Target: Railway (backend) + Lovable (frontend)
+- URL: https://groww-chat-buddy.lovable.app
+- Backend: https://mf-faq-chatbot-v2-clean-production.up.railway.app
+- Status: deployed-and-verified
 
 <!-- Launch checklist — complete before setting status to deployed-and-verified:
 □ Health check endpoint returns expected response
